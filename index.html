@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGEENZY | Marketing Digital & Tarjetas NFC Inteligentes</title>
+  
+  <!-- Fuente principal Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Iconos de FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* =========================================================
+       1. VARIABLES Y ESTILOS BASE DE AGEENZY
+       ========================================================= */
+    :root {
+      --bg-main: #ffffff;
+      --text-main: #000000;
+      --text-muted: #555555;
+      --gray-light: #f7f7f8;
+      --gray-card: #fafafa;
+      --border-color: #e6e6e6;
+      --accent-blue: #2563eb;
+      --shadow-subtle: 0 10px 30px rgba(0,0,0,0.05);
+      --shadow-hover: 0 20px 40px rgba(0,0,0,0.12);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* =========================================================
+       2. ANIMACIONES AL DESLIZAR (REVELADO DE MENOS A MÁS)
+       ========================================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+
+    /* =========================================================
+       3. NAVEGACIÓN PRINCIPAL & MENÚ MÓVIL ESTILO SHOPIFY
+       ========================================================= */
+    header {
+      width: 100%;
+      padding: 20px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .logo-symbol {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 22px;
+    }
+
+    .logo-bar {
+      width: 4px;
+      background-color: var(--text-main);
+      border-radius: 2px;
+    }
+
+    .bar-1 { height: 40%; }
+    .bar-2 { height: 75%; }
+    .bar-3 { height: 100%; }
+    .bar-4 { height: 75%; }
+    .bar-5 { height: 40%; }
+
+    .logo-image {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Navegación de Escritorio */
+    nav.nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    nav.nav-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      position: relative;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    nav.nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--text-main);
+      transition: var(--transition);
+    }
+
+    nav.nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Barra móvil deslizable estilo Shopify (Oculta en PC) */
+    .mobile-quick-nav {
+      display: none;
+      width: 100%;
+      background: var(--bg-main);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 16px;
+      gap: 12px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      position: sticky;
+      top: 69px;
+      z-index: 999;
+    }
+
+    .mobile-quick-nav::-webkit-scrollbar {
+      display: none; /* Ocultar barra de desplazamiento en móviles */
+    }
+
+    .mobile-quick-nav a {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--gray-light);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+      text-decoration: none;
+      scroll-snap-align: start;
+      transition: var(--transition);
+    }
+
+    .mobile-quick-nav a:active {
+      background: var(--text-main);
+      color: var(--bg-main);
+    }
+
+    /* BOTONES GLOBALES */
+    .btn {
+      padding: 13px 26px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .btn-black {
+      background-color: var(--text-main);
+      color: var(--bg-main);
+      border-color: var(--text-main);
+    }
+
+    .btn-black:hover {
+      background-color: #222222;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--text-main);
+      border-color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--gray-light);
+      transform: translateY(-2px);
+    }
+
+    /* =========================================================
+       4. HERO SECTION (SECCIÓN DE INICIO)
+       ========================================================= */
+    .hero {
+      padding: 100px 6% 80px 6%;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background-color: var(--gray-light);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-badge i {
+      color: var(--accent-blue);
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.08;
+      margin-bottom: 24px;
+      letter-spacing: -1.5px;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      max-width: 90%;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats {
+      margin-top: 50px;
+      display: flex;
+      gap: 40px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .stat-item h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
+
+    .stat-item p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+    /* TARJETA MOCKUP HERO INTERACTIVA 3D */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card-mockup-wrapper {
+      width: 100%;
+      max-width: 420px;
+      height: 260px;
+      perspective: 1000px;
+    }
+
+    .nfc-card-3d {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #18181b 0%, #000000 100%);
+      border-radius: 18px;
+      padding: 32px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.15);
+      position: relative;
+      overflow: hidden;
+      transform: rotateY(-8deg) rotateX(6deg);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .nfc-card-3d:hover {
+      transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+      box-shadow: 0 35px 70px rgba(0,0,0,0.35);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-logo-img {
+      height: 24px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .card-logo-fallback {
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .card-chip {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .card-holder {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .card-tech {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      letter-spacing: 1px;
+    }
+
+    .floating-tag {
+      position: absolute;
+      bottom: -15px;
+      left: 10px;
+      background: #ffffff;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-hover);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .floating-tag i {
+      color: #10b981;
+      font-size: 1.1rem;
+    }
+
+    /* =========================================================
+       5. SECCIÓN PRODUCTOS: TARJETAS NFC & SIMULADOR
+       ========================================================= */
+    .section-container {
+      padding: 90px 6%;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 60px auto;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .section-description {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    /* EXPERIENCIA INTERACTIVA CON SMARTPHONE */
+    .nfc-experience-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      background-color: var(--gray-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 50px;
+      margin-bottom: 80px;
+    }
+
+    .phone-simulator {
+      position: relative;
+      width: 270px;
+      height: 520px;
+      background: #000000;
+      border-radius: 40px;
+      padding: 12px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+      border: 4px solid #27272a;
+      margin: 0 auto;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border-radius: 30px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .phone-notch {
+      width: 110px;
+      height: 22px;
+      background: #000000;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      z-index: 10;
+    }
+
+    .phone-content {
+      padding: 40px 20px 20px 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .phone-avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: #000000;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      border: 3px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .phone-avatar img {
+      width: 65%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .phone-name {
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .phone-role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .phone-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .phone-btn {
+      padding: 10px;
+      border-radius: 10px;
+      background: var(--gray-light);
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .phone-btn:hover {
+      background: #e5e5e5;
+    }
+
+    .tap-animation-btn {
+      margin-top: 24px;
+      width: 100%;
+    }
+
+    /* GRID DE CATALOGO TARJETAS */
+    .nfc-catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .product-card {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--text-main);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--text-main);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 50px;
+      text-transform: uppercase;
+    }
+
+    .product-preview-box {
+      height: 180px;
+      background: var(--gray-light);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .card-item-render {
+      width: 200px;
+      height: 120px;
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .card-black-render {
+      background: #000;
+      color: #fff;
+    }
+
+    .card-white-render {
+      background: #fff;
+      color: #000;
+      border: 1px solid var(--border-color);
+    }
+
+    .card-gold-render {
+      background: linear-gradient(135deg, #111 0%, #2b2b2b 100%);
+      color: #e2b857;
+      border: 1px solid #e2b857;
+    }
+
+    .product-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .product-price {
+      font-size: 1.6rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .product-price span {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .product-features {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+
+    .product-features li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .product-features li i {
+      color: var(--text-main);
+      font-size: 0.85rem;
+    }
+
+    /* =========================================================
+       6. SERVICIOS DE MARKETING (META ADS & VIDEO)
+       ========================================================= */
+    .services-bg {
+      background-color: var(--gray-light);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .service-card {
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 40px 32px;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--text-main);
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--gray-light);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      color: var(--text-main);
+    }
+
+    .service-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .service-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .service-single-price {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      background: var(--gray-light);
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .service-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-blue);
+      margin-bottom: 12px;
+    }
+
+    /* CALCULADORA INTERACTIVA */
+    .calculator-box {
+      margin-top: 70px;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 50px;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .calc-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: var(--gray-light);
+      color: var(--text-main);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-select:focus {
+      border-color: var(--text-main);
+      background: var(--bg-main);
+    }
+
+    .calc-result-box {
+      background: var(--text-main);
+      color: #fff;
+      border-radius: var(--radius-md);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .calc-result-box h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      opacity: 0.8;
+      margin-bottom: 10px;
+    }
+
+    .calc-price {
+      font-size: 2.8rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .calc-detail-text {
+      font-size: 0.85rem;
+      color: #a1a1aa;
+      margin-bottom: 24px;
+    }
+
+    /* =========================================================
+       7. METODOLOGÍA: LÍNEA RECTA HORIZONTAL
+       ========================================================= */
+    .methodology-timeline {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      margin-top: 50px;
+      gap: 15px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+    }
+
+    .methodology-timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 40px;
+      right: 40px;
+      height: 3px;
+      background-color: var(--border-color);
+      z-index: 1;
+    }
+
+    .methodology-step {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .methodology-dot {
+      width: 56px;
+      height: 56px;
+      background: var(--bg-main);
+      border: 2px solid var(--text-main);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 18px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .methodology-step:hover .methodology-dot {
+      background: var(--text-main);
+      color: var(--bg-main);
+      transform: scale(1.08);
+    }
+
+    .methodology-step h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .methodology-step p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* =========================================================
+       8. CARRUSEL / GALERÍA DE 8 TARJETAS NFC ENTREGADAS
+       ========================================================= */
+    .portfolio-carousel-container {
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      margin-top: 40px;
+      padding: 10px 0;
+    }
+
+    .portfolio-track {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 15px;
+    }
+
+    .portfolio-track::-webkit-scrollbar {
+      height: 6px;
+    }
+    .portfolio-track::-webkit-scrollbar-track {
+      background: var(--gray-light);
+      border-radius: 10px;
+    }
+    .portfolio-track::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 10px;
+    }
+    .portfolio-track::-webkit-scrollbar-thumb:hover {
+      background: var(--text-main);
+    }
+
+    .portfolio-card {
+      flex: 0 0 320px;
+      height: 380px;
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      scroll-snap-align: start;
+      box-shadow: var(--shadow-subtle);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--text-main);
+    }
+
+    .portfolio-img-box {
+      width: 100%;
+      height: 300px;
+      background: var(--gray-light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .portfolio-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .portfolio-card:hover .portfolio-img-box img {
+      transform: scale(1.04);
+    }
+
+    .portfolio-info {
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-main);
+      flex-grow: 1;
+    }
+
+    .portfolio-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .portfolio-tag-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--gray-light);
+      padding: 4px 10px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* =========================================================
+       9. FOOTER Y BOTÓN WHATSAPP
+       ========================================================= */
+    footer {
+      background-color: var(--text-main);
+      color: #ffffff;
+      padding: 80px 6% 40px 6%;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 50px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand p {
+      color: #a1a1aa;
+      font-size: 0.92rem;
+      margin-top: 16px;
+      max-width: 320px;
+    }
+
+    .footer-column h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column ul li a {
+      color: #a1a1aa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .footer-column ul li a:hover {
+      color: #ffffff;
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-top: 30px;
+      border-top: 1px solid #27272a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #71717a;
+      font-size: 0.85rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-links a {
+      color: #ffffff;
+      width: 36px;
+      height: 36px;
+      background: #27272a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background-color: #25d366;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+      z-index: 999;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 30px rgba(37, 211, 102, 0.6);
+    }
+
+    /* RESPONSIVIDAD GENERAL Y ACTIVACIÓN DE BARRA MÓVIL */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-buttons, .hero-stats {
+        justify-content: center;
+      }
+      .nfc-experience-grid, .nfc-catalog-grid, .services-grid, .steps-container, .calc-grid, .footer-content {
+        grid-template-columns: 1fr;
+      }
+      
+      /* Ocultar menú largo tradicional y mostrar menú deslizable horizontal estilo Shopify */
+      nav.nav-links {
+        display: none;
+      }
+      .mobile-quick-nav {
+        display: flex;
+      }
+
+      .methodology-timeline {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+        padding-left: 20px;
+      }
+      .methodology-timeline::before {
+        top: 28px;
+        bottom: 28px;
+        left: 47px;
+        right: auto;
+        width: 3px;
+        height: auto;
+      }
+      .methodology-step {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        gap: 20px;
+      }
+      .methodology-dot {
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO Y NAVEGACIÓN PRINCIPAL -->
+  <header id="inicio">
+    <a href="#inicio" class="logo-container">
+      <img src="logo-pilares.png" alt="AGEENZY Pilares" class="logo-image" onerror="this.style.display='none'; document.getElementById('headerLogoSymbol').style.display='flex';">
+      <div id="headerLogoSymbol" class="logo-symbol" style="display: none;">
+        <div class="logo-bar bar-1"></div>
+        <div class="logo-bar bar-2"></div>
+        <div class="logo-bar bar-3"></div>
+        <div class="logo-bar bar-4"></div>
+        <div class="logo-bar bar-5"></div>
+      </div>
+      <span class="logo-text">AGEENZY</span>
+    </a>
+
+    <!-- Menú Escritorio -->
+    <nav class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#nfc">Tarjetas NFC</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#metodologia">Metodología</a>
+      <a href="#resultados">Resultados</a>
+    </nav>
+
+    <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20me%20gustaría%20recibir%20más%20información%20sobre%20sus%20servicios%20y%20productos." target="_blank" class="btn btn-black">Contacto</a>
+  </header>
+
+  <!-- MENÚ MÓVIL RÁPIDO DESLIZABLE HORIZONTALMENTE (ESTILO SHOPIFY) -->
+  <div class="mobile-quick-nav">
+    <a href="#inicio"><i class="fa-solid fa-house"></i> Inicio</a>
+    <a href="#nfc"><i class="fa-solid fa-wifi"></i> Tarjetas NFC</a>
+    <a href="#servicios"><i class="fa-solid fa-chart-line"></i> Servicios</a>
+    <a href="#metodologia"><i class="fa-solid fa-list-check"></i> Metodología</a>
+    <a href="#resultados"><i class="fa-solid fa-images"></i> Resultados</a>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content reveal">
+      <div class="hero-badge">
+        <i class="fa-solid fa-bolt"></i> Innovación Digital + Estrategia
+      </div>
+      <h1>Atrae clientes y digitaliza tu negocio.</h1>
+      <p>Agencia de Marketing Digital y Publicidad de alto rendimiento. Proveedores oficiales de Tarjetas NFC inteligentes para escalar tu marca.</p>
+      
+      <div class="hero-buttons">
+        <a href="#nfc" class="btn btn-black"><i class="fa-solid fa-wifi"></i> Comprar Tarjeta NFC</a>
+        <a href="#servicios" class="btn btn-outline"><i class="fa-solid fa-chart-line"></i> Servicios de Marketing</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3>+25k</h3>
+          <p>Visualizaciones/mes</p>
+        </div>
+        <div class="stat-item">
+          <h3>100%</h3>
+          <p>Personalizable</p>
+        </div>
+        <div class="stat-item">
+          <h3>ROI</h3>
+          <p>Enfoque en Ventas</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TARJETA MOCKUP HERO INTERACTIVA 3D -->
+    <div class="hero-visual reveal delay-2">
+      <div class="card-mockup-wrapper">
+        <div class="nfc-card-3d">
+          <div class="card-top">
+            <img src="logo-ageenzy.png" alt="AGEENZY" class="card-logo-img" onerror="this.style.display='none'; document.getElementById('cardFallbackText').style.display='block';">
+            <span id="cardFallbackText" class="card-logo-fallback" style="display: none;">AGEENZY</span>
+            <div class="card-chip"><i class="fa-solid fa-gear"></i></div>
+          </div>
+          <div class="card-bottom">
+            <div>
+              <div class="card-holder">TU NEGOCIO AQUÍ</div>
+              <div class="card-tech">NFC PASS SMART CARD</div>
+            </div>
+            <i class="fa-solid fa-wifi" style="font-size: 1.4rem;"></i>
+          </div>
+        </div>
+      </div>
+      <div class="floating-tag">
+        <i class="fa-solid fa-circle-check"></i> Sin Aplicaciones Requeridas
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE TARJETAS NFC -->
+  <section id="nfc" class="section-container">
+    <div class="section-header reveal">
+      <span class="section-subtitle">Tecnología de Contacto Directo</span>
+      <h2 class="section-title">Tarjetas NFC Inteligentes</h2>
+      <p class="section-description">Transfiere la información de tu empresa, redes sociales o menú a cualquier smartphone con un solo toque.</p>
+    </div>
+
+    <!-- SIMULADOR INTERACTIVO CON SMARTPHONE -->
+    <div class="nfc-experience-grid reveal">
+      <div class="touch-trigger-area">
+        <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 16px;">Pruébala en vivo</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Presiona el botón para simular cómo un cliente toca la tarjeta NFC de AGEENZY con su celular.</p>
+
+        <div class="product-preview-box">
+          <div class="card-item-render card-black-render">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <img src="logo-ageenzy.png" alt="AGEENZY" style="height: 14px; width: auto;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+              <span style="display: none; font-size: 0.75rem;">AGEENZY</span>
+              <i class="fa-solid fa-wifi"></i>
+            </div>
+            <span>TU LOGO EN NEGRO</span>
+          </div>
+        </div>
+
+        <button class="btn btn-black tap-animation-btn" onclick="simulateNFCTap()">
+          <i class="fa-solid fa-hand-pointer"></i> Simular Toque NFC en Teléfono
+        </button>
+      </div>
+
+      <!-- CELULAR SIMULADO -->
+      <div class="phone-simulator">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div id="phoneScreenContent" class="phone-content">
+            <i class="fa-solid fa-wifi" style="font-size: 2.5rem; color: #ccc; margin-bottom: 16px;"></i>
+            <h4 style="font-size: 1.1rem; color: #888;">Acerca la tarjeta para transferir datos...</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATÁLOGO DE PRODUCTOS NFC ACTUALIZADO -->
+    <div class="nfc-catalog-grid">
+      <!-- Tarjeta 1: Standard -->
+      <div class="product-card reveal">
+        <div class="product-preview-box">
+          <div class="card-item-render card-white-render">
+            <div style="display: flex; justify-content: space-between;">
+              <span>AGEENZY</span>
+              <i class="fa-solid fa-wifi"></i>
+            </div>
+            <span>STANDARD WHITE</span>
+          </div>
+        </div>
+        <h3 class="product-title">Tarjeta Standard</h3>
+        <div class="product-price">$350 <span>MXN</span></div>
+        <ul class="product-features">
+          <li><i class="fa-solid fa-check"></i> Chip NFC ultrarrápido</li>
+          <li><i class="fa-solid fa-check"></i> Impresión personalizada (2 lados)</li>
+          <li><i class="fa-solid fa-check"></i> Compatible con iOS y Android</li>
+          <li><i class="fa-solid fa-check"></i> 1 Mes gratis de Panel Linktree AGEENZY</li>
+        </ul>
+        <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20quiero%20comprar%20la%20Tarjeta%20NFC%20Standard%20de%20$350%20MXN.%20¿Me%20pueden%20dar%20los%20datos%20de%20pago%20y%20el%20proceso%20para%20personalizar%20los%20diseños?" target="_blank" class="btn btn-black">Comprar Ahora</a>
+      </div>
+
+      <!-- Tarjeta 2: Paquete Dúo (Más Vendida) -->
+      <div class="product-card reveal delay-1">
+        <div class="product-badge">Más Vendida</div>
+        <div class="product-preview-box">
+          <div class="card-item-render card-black-render">
+            <div style="display: flex; justify-content: space-between;">
+              <span>AGEENZY</span>
+              <i class="fa-solid fa-wifi"></i>
+            </div>
+            <span>PAQUETE DÚO (2X)</span>
+          </div>
+        </div>
+        <h3 class="product-title">Paquete Dúo (2 Tarjetas)</h3>
+        <div class="product-price">$599 <span>MXN</span></div>
+        <ul class="product-features">
+          <li><i class="fa-solid fa-check"></i> <strong>Incluye 2 Tarjetas NFC</strong></li>
+          <li><i class="fa-solid fa-check"></i> Impresión personalizada (2 lados)</li>
+          <li><i class="fa-solid fa-check"></i> Compatible con iOS y Android</li>
+          <li><i class="fa-solid fa-check"></i> 1 Mes gratis de Panel Linktree AGEENZY</li>
+        </ul>
+        <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20me%20interesa%20adquirir%20el%20Paquete%20Dúo%20de%202%20Tarjetas%20NFC%20por%20$599%20MXN.%20¿Cuál%20es%20el%20proceso%20para%20enviar%20los%20logos%20y%20concretar%20el%20pago?" target="_blank" class="btn btn-black">Comprar Ahora</a>
+      </div>
+
+      <!-- Tarjeta 3: Promo 4x3 VIP -->
+      <div class="product-card reveal delay-2">
+        <div class="product-badge" style="background: #e2b857; color: #000;">Promo 4x3</div>
+        <div class="product-preview-box">
+          <div class="card-item-render card-gold-render">
+            <div style="display: flex; justify-content: space-between;">
+              <span>AGEENZY</span>
+              <i class="fa-solid fa-wifi"></i>
+            </div>
+            <span>PAQUETE 4X3 VIP</span>
+          </div>
+        </div>
+        <h3 class="product-title">Paquete 4x3 VIP</h3>
+        <div class="product-price">$999 <span>MXN</span></div>
+        <ul class="product-features">
+          <li><i class="fa-solid fa-check"></i> <strong>Llévate 4 tarjetas (Pagas 3)</strong></li>
+          <li><i class="fa-solid fa-check"></i> Impresión personalizada (2 lados)</li>
+          <li><i class="fa-solid fa-check"></i> Compatible con iOS y Android</li>
+          <li><i class="fa-solid fa-check"></i> 1 Mes gratis de Panel Linktree AGEENZY</li>
+        </ul>
+        <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20quiero%20aprovechar%20la%20Promo%204x3%20VIP%20de%20Tarjetas%20NFC%20por%20$999%20MXN.%20¿Cómo%20nos%20organizamos%20para%20los%20diseños%20y%20el%20pago?" target="_blank" class="btn btn-black">Comprar Ahora</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE SERVICIOS DE MARKETING -->
+  <section id="servicios" class="services-bg">
+    <div class="section-container">
+      <div class="section-header reveal">
+        <span class="section-subtitle">Aceleración de Negocios</span>
+        <h2 class="section-title">Servicios de Marketing</h2>
+        <p class="section-description">Diseñamos y ejecutamos estrategias enfocadas en atraer clientes reales y aumentar el retorno de inversión.</p>
+      </div>
+
+      <div class="services-grid">
+        <!-- Servicio 1 -->
+        <div class="service-card reveal">
+          <div class="service-icon"><i class="fa-solid fa-bullseye"></i></div>
+          <span class="service-tag">Captación Masiva</span>
+          <h3 class="service-title">Meta Ads (FB & IG)</h3>
+          <p class="service-desc">Campañas de publicidad optimizadas para conseguir leads, ventas directas y clientes potenciales todos los días.</p>
+          <span class="service-single-price">Planes desde $2,500 MXN / mes</span>
+          <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20quiero%20cotizar%20el%20servicio%20de%20Meta%20Ads%20para%20mi%20negocio.%20¿Me%20pueden%20dar%20más%20detalles?" target="_blank" class="btn btn-outline">Cotizar Servicio</a>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="service-card reveal delay-1">
+          <div class="service-icon"><i class="fa-solid fa-video"></i></div>
+          <span class="service-tag">El Más Demandado</span>
+          <h3 class="service-title">Videomarketing</h3>
+          <p class="service-desc">Producción de contenido audiovisual estratégico: guion, grabación presencial/remota y edición viral completa.</p>
+          <span class="service-single-price">$900 MXN / Video suelto o en Plan</span>
+          <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20estoy%20interesado%20en%20el%20servicio%20de%20Videomarketing.%20¿Cómo%20agendamos%20una%20sesión?" target="_blank" class="btn btn-outline">Cotizar Servicio</a>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div class="service-card reveal delay-2">
+          <div class="service-icon"><i class="fa-solid fa-scissors"></i></div>
+          <span class="service-tag">Formato Corto</span>
+          <h3 class="service-title">Edición de Video Pro</h3>
+          <p class="service-desc">Edición dinámica con ganchos visuales, subtítulos estilizados y diseño de sonido para Reels y TikToks de alto nivel.</p>
+          <span class="service-single-price">$500 MXN / Video suelto o en Plan</span>
+          <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20quiero%20información%20sobre%20la%20Edición%20de%20Video%20Pro.%20¿A%20dónde%20les%20mando%20el%20material?" target="_blank" class="btn btn-outline">Cotizar Servicio</a>
+        </div>
+      </div>
+
+      <!-- CALCULADORA INTERACTIVA DE PRESUPUESTO -->
+      <div class="calculator-box reveal">
+        <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 24px; text-align: center;">Calculadora Estimada de Plan</h3>
+        <div class="calc-grid">
+          <div class="calc-inputs">
+            <div class="form-group">
+              <label>Selecciona el Servicio Principal:</label>
+              <select id="calcService" class="form-select" onchange="calculatePlan()">
+                <option value="meta">Publicidad en Meta Ads</option>
+                <option value="video">Videomarketing Completo</option>
+                <option value="edition">Edición de Video Pro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Volumen / Alcance Estimado:</label>
+              <select id="calcVolume" class="form-select" onchange="calculatePlan()">
+                <option value="suelto">Video Suelto (Trabajo Individual)</option>
+                <option value="inicial">Plan Inicial (Emprendedores)</option>
+                <option value="crecimiento" selected>Plan Crecimiento (Negocios Establecidos)</option>
+                <option value="escala">Plan Escala (Empresas / Marcas)</option>
+              </select>
+            </div>
+          </div>
+          <div class="calc-result-box">
+            <h4>Inversión Estimada:</h4>
+            <div id="calcPriceDisplay" class="calc-price">$4,800 <span style="font-size: 1rem;">MXN / mes</span></div>
+            <div id="calcDetailDisplay" class="calc-detail-text">Gestión completa de campañas en Meta Ads</div>
+            <a id="calcWhatsappBtn" href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20hice%20una%20cotización..." target="_blank" class="btn btn-black" style="background: #fff; color: #000;">Solicitar Asesoría</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN METODOLOGÍA: LÍNEA RECTA HORIZONTAL -->
+  <section id="metodologia" class="section-container">
+    <div class="section-header reveal">
+      <span class="section-subtitle">Paso a Paso</span>
+      <h2 class="section-title">Nuestra Metodología</h2>
+      <p class="section-description">El proceso estructurado de videomarketing de alto impacto para retener y convertir a tu audiencia.</p>
+    </div>
+
+    <div class="methodology-timeline reveal">
+      <!-- Punto 1 -->
+      <div class="methodology-step">
+        <div class="methodology-dot">01</div>
+        <h4>Idea Ganadora</h4>
+        <p>Basada en dudas reales y comentarios del nicho.</p>
+      </div>
+
+      <!-- Punto 2 -->
+      <div class="methodology-step">
+        <div class="methodology-dot">02</div>
+        <h4>El Gancho</h4>
+        <p>Ataque directo al dolor enfocado en los 4 pilares.</p>
+      </div>
+
+      <!-- Punto 3 -->
+      <div class="methodology-step">
+        <div class="methodology-dot">03</div>
+        <h4>General a Nicho</h4>
+        <p>Estructura desde la pregunta global a la recompensa.</p>
+      </div>
+
+      <!-- Punto 4 -->
+      <div class="methodology-step">
+        <div class="methodology-dot">04</div>
+        <h4>Guión Pro</h4>
+        <p>Palabras precisas para retención total de atención.</p>
+      </div>
+
+      <!-- Punto 5 -->
+      <div class="methodology-step">
+        <div class="methodology-dot">05</div>
+        <h4>Formato Visual</h4>
+        <p>Mezcla dinámica de POV, vlog y cinematográfico.</p>
+      </div>
+
+      <!-- Punto 6 -->
+      <div class="methodology-step">
+        <div class="methodology-dot">06</div>
+        <h4>Coherencia</h4>
+        <p>Espacios y autoridad 100% congruentes con tu marca.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: GALERÍA DE 8 TARJETAS NFC ENTREGADAS (CARRUSEL) -->
+  <section id="resultados" class="section-container" style="padding-top: 0;">
+    <div class="section-header reveal">
+      <span class="section-subtitle">Prueba Social & Calidad Real</span>
+      <h2 class="section-title">Tarjetas NFC Entregadas</h2>
+      <p class="section-description">Muestra de nuestras impresiones y acabados personalizados entregados a clientes reales.</p>
+    </div>
+
+    <!-- CARRUSEL HORIZONTAL DE 8 FOTOS -->
+    <div class="portfolio-carousel-container reveal">
+      <div class="portfolio-track">
+        
+        <!-- Foto 1 -->
+        <div class="portfolio-card">
+          <div class="portfolio-img-box">
+            <img src="foto-tarjeta-1.jpg" alt="Tarjeta NFC Entregada 1" onerror="this.src='https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80'">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-title">Diseño Personalizado #1</span>
+            <span class="portfolio-tag-badge">Entregado</span>
+          </div>
+        </div>
+
+        <!-- Foto 2 -->
+        <div class="portfolio-card">
+          <div class="portfolio-img-box">
+            <img src="foto-tarjeta-2.jpg" alt="Tarjeta NFC Entregada 2" onerror="this.src='https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80'">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-title">Diseño Personalizado #2</span>
+            <span class="portfolio-tag-badge">Entregado</span>
+          </div>
+        </div>
+
+        <!-- Foto 3 -->
+        <div class="portfolio-card">
+          <div class="portfolio-img-box">
+            <img src="foto-tarjeta-3.jpg" alt="Tarjeta NFC Entregada 3" onerror="this.src='https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=600&q=80'">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-title">Diseño Personalizado #3</span>
+            <span class="portfolio-tag-badge">Entregado</span>
+          </div>
+        </div>
+
+        <!-- Foto 4 -->
+        <div class="portfolio-card">
+          <div class="portfolio-img-box">
+            <img src="foto-tarjeta-4.jpg" alt="Tarjeta NFC Entregada 4" onerror="this.src='https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80'">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-title">Diseño Personalizado #4</span>
+            <span class="portfolio-tag-badge">Entregado</span>
+          </div>
+        </div>
+
+        <!-- Foto 5 -->
+        <div class="portfolio-card">
+          <div class="portfolio-img-box">
+            <img src="foto-tarjeta-5.jpg" alt="Tarjeta NFC Entregada 5" onerror="this.src='https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80'">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-title">Diseño Personalizado #5</span>
+            <span class="portfolio-tag-badge">Entregado</span>
+          </div>
+        </div>
+
+        <!-- Foto 6 -->
+        <div class="portfolio-card">
+          <div class="portfolio-img-box">
+            <img src="foto-tarjeta-6.jpg" alt="Tarjeta NFC Entregada 6" onerror="this.src='https://images.unsplash.com/photo-1556742049-0a67ca868846?auto=format&fit=crop&w=600&q=80'">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-title">Diseño Personalizado #6</span>
+            <span class="portfolio-tag-badge">Entregado</span>
+          </div>
+        </div>
+
+        <!-- Foto 7 -->
+        <div class="portfolio-card">
+          <div class="portfolio-img-box">
+            <img src="foto-tarjeta-7.jpg" alt="Tarjeta NFC Entregada 7" onerror="this.src='https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=600&q=80'">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-title">Diseño Personalizado #7</span>
+            <span class="portfolio-tag-badge">Entregado</span>
+          </div>
+        </div>
+
+        <!-- Foto 8 -->
+        <div class="portfolio-card">
+          <div class="portfolio-img-box">
+            <img src="foto-tarjeta-8.jpg" alt="Tarjeta NFC Entregada 8" onerror="this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80'">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-title">Diseño Personalizado #8</span>
+            <span class="portfolio-tag-badge">Entregado</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PIE DE PÁGINA (FOOTER) -->
+  <footer id="contacto">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo-container">
+          <img src="logo-pilares.png" alt="AGEENZY Pilares" class="logo-image" style="filter: brightness(0) invert(1);" onerror="this.style.display='none'; document.getElementById('footerLogoSymbol').style.display='flex';">
+          <div id="footerLogoSymbol" class="logo-symbol" style="display: none;">
+            <div class="logo-bar bar-1" style="background:#fff;"></div>
+            <div class="logo-bar bar-2" style="background:#fff;"></div>
+            <div class="logo-bar bar-3" style="background:#fff;"></div>
+            <div class="logo-bar bar-4" style="background:#fff;"></div>
+            <div class="logo-bar bar-5" style="background:#fff;"></div>
+          </div>
+          <span class="logo-text" style="color:#fff;">AGEENZY</span>
+        </div>
+        <p>Agencia de Marketing Digital y tecnología de impacto. Elevamos marcas con publicidad efectiva, videomarketing y tarjetas NFC inteligentes.</p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#nfc">Tarjetas NFC</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#metodologia">Metodología</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#servicios">Meta Ads</a></li>
+          <li><a href="#servicios">Videomarketing</a></li>
+          <li><a href="#servicios">Edición de Video</a></li>
+          <li><a href="#nfc">Tecnología NFC</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20vengo%20de%20la%20página%20web%20y%20quiero%20información%20directa." target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp Directo</a></li>
+          <li><a href="https://instagram.com/ageenzy" target="_blank"><i class="fa-brands fa-instagram"></i> @ageenzy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 AGEENZY. Todos los derechos reservados.</p>
+      <div class="social-links">
+        <a href="https://instagram.com/ageenzy" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20vengo%20de%20la%20página%20web." target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+  <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20vengo%20de%20la%20página%20web%20y%20quiero%20asesoría." target="_blank" class="whatsapp-float">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- JAVASCRIPT DE INTERACCIONES Y ANIMACIONES -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      }, { threshold: 0.12 });
+
+      reveals.forEach(reveal => observer.observe(reveal));
+      calculatePlan();
+    });
+
+    function simulateNFCTap() {
+      const phoneContent = document.getElementById("phoneScreenContent");
+      phoneContent.innerHTML = `
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 2.2rem; color: #000; margin-bottom: 16px;"></i>
+        <h4 style="font-size: 1.05rem; font-weight: 800;">Leyendo Tarjeta NFC...</h4>
+      `;
+
+      setTimeout(() => {
+        phoneContent.innerHTML = `
+          <div class="phone-avatar">
+            <img src="logo-ageenzy.png" alt="AGEENZY" onerror="this.style.display='none'; this.parentNode.innerHTML='AGEENZY';">
+          </div>
+          <div class="phone-name">AGEENZY AGENCIA</div>
+          <div class="phone-role">Marketing & Soluciones NFC</div>
+          <div class="phone-actions">
+            <a href="https://wa.me/526863619079?text=Hola%20AGEENZY,%20vi%20la%20demostración%20NFC%20en%20su%20sitio%20web%20y%20quiero%20contratar." target="_blank" class="phone-btn" style="background:#000; color:#fff;"><i class="fa-brands fa-whatsapp"></i> Enviar Mensaje Directo</a>
+            <a href="https://instagram.com/ageenzy" target="_blank" class="phone-btn"><i class="fa-brands fa-instagram"></i> Ver Perfil de Instagram</a>
+            <a href="#inicio" onclick="resetPhoneSimulator()" class="phone-btn"><i class="fa-solid fa-globe"></i> Visitar Sitio Web</a>
+          </div>
+        `;
+      }, 1000);
+    }
+
+    function resetPhoneSimulator() {
+      document.getElementById("phoneScreenContent").innerHTML = `
+        <i class="fa-solid fa-wifi" style="font-size: 2.5rem; color: #ccc; margin-bottom: 16px;"></i>
+        <h4 style="font-size: 1.1rem; color: #888;">Acerca la tarjeta para transferir datos...</h4>
+      `;
+    }
+
+    function calculatePlan() {
+      const service = document.getElementById("calcService").value;
+      const volume = document.getElementById("calcVolume").value;
+      const displayPrice = document.getElementById("calcPriceDisplay");
+      const displayDetail = document.getElementById("calcDetailDisplay");
+      const btnWhatsapp = document.getElementById("calcWhatsappBtn");
+
+      let price = 0, detail = "", serviceName = "", isMonthly = true, volumeName = "";
+
+      if (service === "meta") {
+        serviceName = "Meta Ads";
+        if (volume === "suelto" || volume === "inicial") { price = 2500; volumeName = "Plan Inicial"; detail = "Gestión inicial de campañas en Facebook e Instagram"; }
+        else if (volume === "crecimiento") { price = 4800; volumeName = "Plan Crecimiento"; detail = "Estrategia completa, optimización diaria y escalamiento de leads"; }
+        else { price = 7400; volumeName = "Plan Escala"; detail = "Estrategia agresiva de ventas masivas"; }
+      } else if (service === "video") {
+        serviceName = "Videomarketing Completo";
+        if (volume === "suelto") { price = 900; isMonthly = false; volumeName = "Video Suelto"; detail = "1 Video individual completo"; }
+        else if (volume === "inicial") { price = 6000; volumeName = "Plan Inicial"; detail = "8 videos al mes + Estrategia y Edición"; }
+        else if (volume === "crecimiento") { price = 9000; volumeName = "Plan Crecimiento"; detail = "12 videos al mes + Estrategia y Edición"; }
+        else { price = 12000; volumeName = "Plan Escala"; detail = "16 videos al mes"; }
+      } else if (service === "edition") {
+        serviceName = "Edición de Video Pro";
+        if (volume === "suelto") { price = 500; isMonthly = false; volumeName = "Video Suelto"; detail = "1 Video editado profesionalmente"; }
+        else if (volume === "inicial") { price = 4000; volumeName = "Plan Inicial"; detail = "8 videos editados al mes"; }
+        else if (volume === "crecimiento") { price = 6000; volumeName = "Plan Crecimiento"; detail = "12 videos editados al mes"; }
+        else { price = 8400; volumeName = "Plan Escala"; detail = "16 videos editados al mes"; }
+      }
+
+      const periodLabel = isMonthly ? "/ mes" : "pago único";
+      displayPrice.innerHTML = `$${price.toLocaleString('es-MX')} <span style="font-size: 1rem;">MXN ${periodLabel}</span>`;
+      displayDetail.innerHTML = detail;
+
+      const mensajeWA = `Hola AGEENZY, coticé en su web el servicio de *${serviceName}* (${volumeName}) por *$${price.toLocaleString('es-MX')} MXN* ${periodLabel}. Me interesa solicitar asesoría.`;
+      btnWhatsapp.href = `https://wa.me/526863619079?text=${encodeURIComponent(mensajeWA)}`;
+    }
+  </script>
+</body>
+</html>
